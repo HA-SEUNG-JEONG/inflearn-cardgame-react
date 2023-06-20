@@ -51,6 +51,10 @@
   perspective: 1000px;
 }
 
+.list-card {
+  list-style: none;
+}
+
 .list-card li {
   position: relative;
   width: 19%;
