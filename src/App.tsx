@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Cards from "./components/Cards";
 
 interface CardProps {
   name: string;
   isVisible: boolean;
 }
 
-function App() {
+const App = () => {
   const [cards, setCards] = useState<CardProps[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
 
@@ -16,14 +17,15 @@ function App() {
 
   const shuffleCards = () => {
     const data = ["mura", "gary", "licat", "binky", "javadog"];
-    const dataDouble = data.concat(data);
+    const dataDouble = [...data, ...data];
 
-    const shuffledCards = dataDouble.map((item) => ({
-      name: item,
-      isVisible: false,
-    }));
+    const shuffledCards = [...dataDouble]
+      .sort(() => Math.random() - 0.5)
+      .map((item) => ({
+        name: item,
+        isVisible: false,
+      }));
 
-    shuffledCards.sort(() => Math.random() - 0.5);
     setCards([...shuffledCards]);
   };
 
@@ -63,23 +65,17 @@ function App() {
         </h1>
         <ul className="list-card">
           {cards.map((card, index) => (
-            <li
+            <Cards
               key={index}
-              className={`card ${card.isVisible ? "visible" : ""}`}
-              onClick={() => handleClick(index)}>
-              {card.isVisible && (
-                <img
-                  className="list-card"
-                  src={`../src/images/${card.name}.png`}
-                  alt={card.name}
-                />
-              )}
-            </li>
+              name={card.name}
+              isVisible={card.isVisible}
+              onClick={() => handleClick(index)}
+            />
           ))}
         </ul>
       </section>
     </main>
   );
-}
+};
 
 export default App;
