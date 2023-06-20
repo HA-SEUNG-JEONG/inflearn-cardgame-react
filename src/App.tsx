@@ -17,26 +17,24 @@ function App() {
   const shuffleCards = () => {
     const data = ["mura", "gary", "licat", "binky", "javadog"];
     const dataDouble = data.concat(data);
-    const shuffledCards = [];
 
-    while (dataDouble.length > 0) {
-      const randomNum = Math.floor(Math.random() * dataDouble.length);
-      const item = dataDouble.splice(randomNum, 1)[0];
-      const card = { name: item, isVisible: false };
-      shuffledCards.push(card);
-    }
-    setCards(shuffledCards);
+    const shuffledCards = dataDouble.map((item) => ({
+      name: item,
+      isVisible: false,
+    }));
+
+    shuffledCards.sort(() => Math.random() - 0.5);
+    setCards([...shuffledCards]);
   };
 
   const handleClick = (index: number) => {
-    if (selectedCards.length >= 2 || selectedCards[0] === index) {
-      return;
-    }
+    if (selectedCards.length >= 2 || selectedCards[0] === index) return;
 
-    const updatedCards = [...cards];
-    updatedCards[index].isVisible = true;
+    const updatedCards = cards.map((card, i) =>
+      i === index ? { ...card, isVisible: true } : card
+    );
 
-    setSelectedCards([...selectedCards, index]);
+    setSelectedCards((prev) => [...prev, index]);
     setCards(updatedCards);
 
     if (selectedCards.length === 1) {
@@ -44,16 +42,15 @@ function App() {
         const firstCard = cards[selectedCards[0]];
         const secondCard = cards[index];
 
-        if (firstCard.name === secondCard.name) {
-          updatedCards[selectedCards[0]].isVisible = true;
-          updatedCards[index].isVisible = true;
-        } else {
-          updatedCards[selectedCards[0]].isVisible = false;
-          updatedCards[index].isVisible = false;
-        }
+        const isMatched = firstCard.name === secondCard.name;
+        const updatedCardsAfterComparison = updatedCards.map((card, i) =>
+          i === selectedCards[0] || i === index
+            ? { ...card, isVisible: isMatched }
+            : card
+        );
 
         setSelectedCards([]);
-        setCards(updatedCards);
+        setCards(updatedCardsAfterComparison);
       }, 500);
     }
   };
