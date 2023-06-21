@@ -10,7 +10,7 @@ const Cards = ({ name, isVisible, onClick }: CardProps) => {
       {isVisible && (
         <img
           className="list-card"
-          src={`https://inflearn-cardgame-react.vercel.app/${name}.png`}
+          src={`https://inflearn-cardgame-react.vercel.app/images/${name}.png`}
           alt={name}
         />
       )}
