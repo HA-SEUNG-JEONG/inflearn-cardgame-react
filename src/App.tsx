@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Cards from "./components/Cards";
-
 interface CardProps {
   name: string;
   isVisible: boolean;
@@ -10,9 +9,11 @@ interface CardProps {
 const App = () => {
   const [cards, setCards] = useState<CardProps[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
     shuffleCards();
+    handleHint();
   }, []);
 
   const shuffleCards = () => {
@@ -21,10 +22,7 @@ const App = () => {
 
     const shuffledCards = [...dataDouble]
       .sort(() => Math.random() - 0.5)
-      .map((item) => ({
-        name: item,
-        isVisible: false,
-      }));
+      .map((item) => ({ name: item, isVisible: false }));
 
     setCards([...shuffledCards]);
   };
@@ -45,6 +43,7 @@ const App = () => {
         const secondCard = cards[index];
 
         const isMatched = firstCard.name === secondCard.name;
+
         const updatedCardsAfterComparison = updatedCards.map((card, i) =>
           i === selectedCards[0] || i === index
             ? { ...card, isVisible: isMatched }
@@ -55,6 +54,13 @@ const App = () => {
         setCards(updatedCardsAfterComparison);
       }, 500);
     }
+  };
+
+  const handleHint = () => {
+    setShowHint(true);
+    setTimeout(() => {
+      setShowHint(false);
+    }, 1000);
   };
 
   return (
@@ -68,7 +74,7 @@ const App = () => {
             <Cards
               key={index}
               name={card.name}
-              isVisible={card.isVisible}
+              isVisible={card.isVisible || showHint}
               onClick={() => handleClick(index)}
             />
           ))}
