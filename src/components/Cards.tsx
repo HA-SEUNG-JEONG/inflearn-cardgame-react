@@ -10,7 +10,7 @@ const Cards = ({ name, isVisible, onClick }: CardProps) => {
       {isVisible && (
         <img
           className="list-card"
-          src={`../src/images/${name}.png`}
+          src={`../../public/images/${name}.png`}
           alt={name}
         />
       )}
