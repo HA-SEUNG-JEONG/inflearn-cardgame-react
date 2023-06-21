@@ -27,6 +27,29 @@ const App = () => {
     setCards([...shuffledCards]);
   };
 
+  const handleCardComparison = (cards: CardProps[], index: number) => {
+    const firstCard = cards[selectedCards[0]];
+    const secondCard = cards[index];
+
+    const isMatched = firstCard.name === secondCard.name;
+
+    const updatedCardsAfterComparison = cards.map((card, i) =>
+      i === selectedCards[0] || i === index
+        ? { ...card, isVisible: isMatched }
+        : card
+    );
+
+    setSelectedCards([]);
+    setCards(updatedCardsAfterComparison);
+  };
+
+  const compareCards = (cards: CardProps[], index: number) => {
+    setTimeout(
+      () => handleCardComparison(cards, index),
+      selectedCards.length === 1 ? 500 : 0
+    );
+  };
+
   const handleClick = (index: number) => {
     if (selectedCards.length >= 2 || selectedCards[0] === index) return;
 
@@ -37,23 +60,7 @@ const App = () => {
     setSelectedCards((prev) => [...prev, index]);
     setCards(updatedCards);
 
-    if (selectedCards.length === 1) {
-      setTimeout(() => {
-        const firstCard = cards[selectedCards[0]];
-        const secondCard = cards[index];
-
-        const isMatched = firstCard.name === secondCard.name;
-
-        const updatedCardsAfterComparison = updatedCards.map((card, i) =>
-          i === selectedCards[0] || i === index
-            ? { ...card, isVisible: isMatched }
-            : card
-        );
-
-        setSelectedCards([]);
-        setCards(updatedCardsAfterComparison);
-      }, 500);
-    }
+    compareCards(updatedCards, index);
   };
 
   const handleHint = () => {
