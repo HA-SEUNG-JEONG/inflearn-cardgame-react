@@ -73,9 +73,6 @@ const App = () => {
   return (
     <main id="app">
       <section className="content-board">
-        <h1 className="title-game">
-          <strong className="title-image">Card Game</strong>
-        </h1>
         <ul className="list-card">
           {cards.map((card, index) => (
             <Cards
