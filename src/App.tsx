@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Cards from "./components/Cards";
+import Timer from "./components/Timer";
 interface CardProps {
   name: string;
   isVisible: boolean;
@@ -71,20 +72,23 @@ const App = () => {
   };
 
   return (
-    <main id="app">
-      <section className="content-board">
-        <ul className="list-card">
-          {cards.map((card, index) => (
-            <Cards
-              key={index}
-              name={card.name}
-              isVisible={card.isVisible || showHint}
-              onClick={() => handleClick(index)}
-            />
-          ))}
-        </ul>
-      </section>
-    </main>
+    <>
+      <Timer />
+      <main id="app">
+        <section className="content-board">
+          <ul className="list-card">
+            {cards.map((card, index) => (
+              <Cards
+                key={index}
+                name={card.name}
+                isVisible={card.isVisible || showHint}
+                onClick={() => handleClick(index)}
+              />
+            ))}
+          </ul>
+        </section>
+      </main>
+    </>
   );
 };
 
