@@ -6,7 +6,7 @@ interface CardProps {
 
 const Cards = ({ name, isVisible, onClick }: CardProps) => {
   return (
-    <li className={`card ${isVisible ? "visible" : ""}`} onClick={onClick}>
+    <li className={`card${isVisible ? " visible" : ""}`} onClick={onClick}>
       {isVisible && (
         <img
           className="list-card"

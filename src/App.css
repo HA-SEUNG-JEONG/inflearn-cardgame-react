@@ -26,7 +26,11 @@
 
 .list-card {
   list-style: none;
-  gap: 0.5rem;
+  gap: 1rem;
+}
+
+.list-card img {
+  border-radius: 1rem;
 }
 
 .timer {
