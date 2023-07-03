@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Timer = () => {
   const [minutes, setMinutes] = useState(1);
@@ -9,7 +10,7 @@ const Timer = () => {
       if (seconds > 0) setSeconds(seconds - 1);
       if (seconds === 0) {
         if (minutes === 0) {
-          alert("시간 종료");
+          toast.info("시간 종료");
           clearTimeout(countDown);
         } else {
           setMinutes(minutes - 1);
